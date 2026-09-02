@@ -14,36 +14,22 @@ import { prisma } from "../lib/prisma.js"
  */
 export const categoryRepository = {
 
-    // Creates a new category or reactivates an inactive category with the same name.
-    async create(data: {
+    // Creates a new category.
+    create(data: {
         name: string;
-        isActive: boolean
-    }){
-        const verifyExist = await this.findByName(data.name);
-
-        // Create the category if no category with the same name exists.
-        if(!verifyExist){
-            return prisma.category.create({
-                data,
-            });
-        }
-
-        // Prevent creating a duplicate active category.
-        if(verifyExist.isActive) {
-            throw new Error('Category already exists');
-        }
-
-        // Reactivate the existing category instead of creating a new one.
-        return this.update(verifyExist.id, {
-            name: verifyExist.name, 
-            isActive: true,
+        isActive: boolean;
+    }) {
+        return prisma.category.create({
+            data,
         });
     },
 
 
     // Retrieves all categories.
     findAll(){
-        return prisma.category.findMany();
+        return prisma.category.findMany({
+            where: { isActive: true },
+        });
     },
 
 

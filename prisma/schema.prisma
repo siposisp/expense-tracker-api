@@ -39,6 +39,7 @@ model Expense {
   description String?
   date        DateTime
   createdAt   DateTime @default(now())
+  isActive    Boolean  @default(true)
   userId      Int
   categoryId  Int
   

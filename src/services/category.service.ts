@@ -3,8 +3,7 @@ import { categoryRepository } from "../repositories/category.repository.js";
 type CategoryData = {
     name: string;
     isActive: boolean;
-}
-
+};
 
 /**
  * Category Service
@@ -19,48 +18,44 @@ type CategoryData = {
  */
 export const categoryService = {
 
-    // Creates a new category after checking that its name is not already in use.
-    async createCategory(data: CategoryData){
+    // Creates a new category or reactivates it if it already exists but is inactive.
+    async createCategory(data: { name: string }) {
         const existingCategory = await categoryRepository.findByName(data.name);
 
-        if(existingCategory){
-            throw new Error('Category already exists');
+        if (existingCategory?.isActive) {
+            throw new Error("Category already exists");
         }
 
-        const category = await categoryRepository.create({
+        if (existingCategory && !existingCategory.isActive) {
+            return categoryRepository.update(existingCategory.id, {
+                name: existingCategory.name,
+                isActive: true,
+            });
+        }
+
+        // Se fuerza isActive: true explícitamente, sin importar qué mande el cliente
+        return categoryRepository.create({
             name: data.name,
-            isActive: data.isActive,
-        })
-
-        return {
-            id: category.id,
-            name: category.name,
-            isActive: category.isActive,
-        }
+            isActive: true,
+        });
     },
-
 
     // Finds a category by its unique ID.
-    async getById(id: number){
+    async getById(id: number) {
         const category = await categoryRepository.findById(id);
 
-        if(!category){
+        if (!category) {
             throw new Error("Category not found");
         }
 
-        return {
-            id: category.id,
-            name: category.name,
-            isActive: category.isActive,
-        }
+        return category;
     },
-
 
     // Finds a category by its unique name.
-    async getByName(name: string){
+    async getByName(name: string) {
         const category = await categoryRepository.findByName(name);
 
-        if(!category){
+        if (!category) {
             throw new Error("Category not found");
         }
 
@@ -68,50 +63,46 @@ export const categoryService = {
             id: category.id,
             name: category.name,
             isActive: category.isActive,
-        }
+        };
     },
 
-
     // Retrieves all categories from the database.
-    async getAll(){
+    async getAll() {
         const categories = await categoryRepository.findAll();
 
-        if(categories.length === 0){
+        if (categories.length === 0) {
             throw new Error("Categories not found");
         }
 
         return categories;
-
     },
 
-
     // Updates an existing category while preventing duplicated category names.
-    async update(id: number, data: CategoryData){
+    async update(id: number, data: CategoryData) {
         const existingCategory = await categoryRepository.findById(id);
 
-        if(!existingCategory){
-            throw new Error('Category does not exist');
+        if (!existingCategory) {
+            throw new Error("Category does not exist");
         }
 
-        // If you are changing the name, verify that the new name is not in us
-        if (data.name !== existingCategory.name){
+        // Check name availability only when the category name is being changed.
+        if (data.name !== existingCategory.name) {
             const nameTaken = await categoryRepository.findByName(data.name);
-            if(nameTaken){
-                throw new Error('Category name already in use');
+
+            if (nameTaken) {
+                throw new Error("Category name already in use");
             }
         }
 
         return categoryRepository.update(id, data);
-
     },
 
-
-    // Deletes the category only if it exists and is currently active.
-    async delete(id: number){
+    // Deactivates a category only if it exists and is currently active.
+    async delete(id: number) {
         const existingCategory = await categoryRepository.findById(id);
 
-        if(!existingCategory || !existingCategory.isActive){
-            throw new Error('Category does not exist');
+        if (!existingCategory || !existingCategory.isActive) {
+            throw new Error("Category does not exist");
         }
 
         return categoryRepository.delete(id);
