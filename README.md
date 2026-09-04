@@ -54,10 +54,10 @@ The main goal of this project is to build a secure and maintainable REST API whi
 - Prisma ORM
 - JWT
 - bcrypt
+- Zod
 
 Planned technologies:
 
-- Zod
 - Swagger / OpenAPI
 - Jest
 - Supertest
