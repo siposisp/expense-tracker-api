@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { login } from "../api/auth";
+import { Link } from "react-router-dom";
 
 
 export default function Form() {
@@ -24,25 +25,18 @@ export default function Form() {
         } finally {
             setLoading(false);
         }
-
-
-
-
-
-        //console.log('Datos a enviar:', {email, password});
     }
-
 
     return (
         <div className='bg-white px-10 py-10.5 rounded-3xl border-2 border-gray-300'>
             <h1 className='text-5xl font-semibold'>Welcome Back</h1>
             <p className='font-medium text-lg text-gray-500 mt-4'>Welcome back! Please enter your details.</p>
-            <form onSubmit={handleSubmit} className='mt-8'>
+            <form onSubmit={handleSubmit} className='mt-5'>
                 {error && (
                     <p className="text-red-500 font-medium mb-4">{error}</p>
                 )}
 
-                <div className='mt-8'>
+                <div>
                     <div>
                         <label className='text-lg font-medium'>Email</label>
                         <input
@@ -54,7 +48,7 @@ export default function Form() {
                             required
                         />
                     </div>
-                    <div >
+                    <div className='mt-3'>
                         <label className='text-lg font-medium'>Password</label>
                         <input
                             className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
@@ -84,7 +78,7 @@ export default function Form() {
                             disabled={loading}
                             className= 'active:scale-[.98] active:duration-60 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold'
                         >
-                            {loading ? 'Signin in...' : 'Sign in'}
+                            {loading ? 'Signing in...' : 'Sign in'}
                         </button>
                         <button type="button" className="flex border-2 py-2 rounded-xl border-gray-100 active:scale-[.98] active:duration-60 hover:scale-[1.01] items-center justify-center gap-2">
                         <svg width="24" height="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -98,9 +92,7 @@ export default function Form() {
                     </div>
                     <div className='mt-8 flex justify-center item-center'>
                         <p className='font-medium text-base'>Don't have an account</p>
-                        <button type="button" className='text-violet-500 text-base font-medium ml-2'>
-                            Sign up
-                        </button>
+                        <Link to="/register" className='text-violet-500 text-base font-medium ml-2'>Sign up</Link>
                     </div>
                 </div>
             </form>

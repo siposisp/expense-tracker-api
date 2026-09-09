@@ -1,10 +1,10 @@
-import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
 
-function Login(){
+function Register(){
     return (
         <div className="flex w-full h-screen">
             <div className="w-full flex items-center justify-center lg:w-1/2">
-                <LoginForm />
+                <RegisterForm />
             </div>
             <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
             <div className="w-60 h-60 bg-gradient-to-tr from-violet-500 to-pink-500 rounded-full animate-bounce" />
@@ -14,4 +14,4 @@ function Login(){
     );
 }
 
-export default Login;
+export default Register;
