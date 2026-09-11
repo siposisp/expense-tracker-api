@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { authService } from "../services/auth.service.js";
+import { forgotPasswordSchema } from "../schemas/auth.schema.js";
 
 /**
  * Authentication Controller
@@ -59,4 +60,31 @@ export const authController = {
             });
         }
     },
+
+    async forgotPassword(req: Request, res: Response) {
+        try {
+            const result = await authService.requestPasswordReset(req.body.email);
+            return res.status(200).json(result);
+        } catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({ error: error.message });
+            }
+            return res.status(500).json({ error: "Internal server error" });
+        }
+    },
+
+    async resetPassword(req: Request, res: Response) {
+        try {
+            const result = await authService.resetPassword(req.body.token, req.body.password);
+            return res.status(200).json(result);
+        } catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({ error: error.message });
+            }
+            return res.status(500).json({ error: "Internal server error" });
+        }
+    },
 };
+
+
+

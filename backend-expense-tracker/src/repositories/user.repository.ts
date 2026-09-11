@@ -36,4 +36,12 @@ export const userRepository = {
         });
     },
 
+    // Updates the user's password.
+    updatePassword(id: number, hashedPassword: string) {
+        return prisma.user.update({
+            where: { id },
+            data: { password: hashedPassword },
+        });
+    },
+
 };
