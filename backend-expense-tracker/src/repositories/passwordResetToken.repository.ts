@@ -21,7 +21,7 @@ export const passwordResetTokenRepository = {
     },
 
     // Marks a token as used, so it can't be reused.
-    markAsUSed(id: number) {
+    markAsUsed(id: number) {
         return prisma.passwordResetToken.update({
             where: { id },
             data: { used: true },

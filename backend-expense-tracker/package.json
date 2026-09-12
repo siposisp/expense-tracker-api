@@ -7,8 +7,8 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^10.0.8",
     "pg": "^8.23.0",
-    "resend": "^6.26.0",
     "zod": "^4.5.4"
   },
   "name": "expense-tracker-api",
@@ -39,6 +39,7 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.3.0",
+    "@types/nodemailer": "^8.0.1",
     "@types/pg": "^8.23.1",
     "prisma": "^7.9.1",
     "tsx": "^4.23.12",

@@ -150,7 +150,7 @@ export const authService = {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         await userRepository.updatePassword(resetToken.userId, hashedPassword);
-        await passwordResetTokenRepository.markAsUSed(resetToken.id);
+        await passwordResetTokenRepository.markAsUsed(resetToken.id);
 
         return {
             message: "Password reset successfully"

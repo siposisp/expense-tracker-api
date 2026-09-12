@@ -18,7 +18,7 @@ export const categoryController = {
         try {
             const category = await categoryService.createCategory({
                 name: req.body.name,
-                isActive: req.body.isActive,
+                //isActive: req.body.isActive,
             });
 
             return res.status(201).json(category);
