@@ -67,9 +67,9 @@ export default function Form() {
                             />
                             <label className='ml-1.5 font-medium text-base' htmlFor="remember">Remember for 30 days</label>
                         </div>
-                        <button type="button" className='font-medium text-base text-violet-500'>
+                        <Link to="/forgot-password" className="font-medioum text-base text-violet-500">
                             Forgot password
-                        </button>
+                        </Link>
                     </div>
 
                     <div className= 'mt-8 flex flex-col gap-y-4'>

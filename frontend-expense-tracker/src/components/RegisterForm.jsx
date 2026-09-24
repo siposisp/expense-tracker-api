@@ -70,7 +70,7 @@ export default function Form() {
                             required
                         />
                     </div>
-                    <div className='mt-8 flex justify-between items-center'>
+                    <div className='mt-8 flex justify-center items-center'>
                         <div>
                             <input
                                 type="checkbox"
@@ -78,9 +78,6 @@ export default function Form() {
                             />
                             <label className='ml-1.5 font-medium text-base' htmlFor="remember">Remember for 30 days</label>
                         </div>
-                        <button type="button" className='font-medium text-base text-violet-500'>
-                            Forgot password
-                        </button>
                     </div>
 
                     <div className= 'mt-8 flex flex-col gap-y-4'>

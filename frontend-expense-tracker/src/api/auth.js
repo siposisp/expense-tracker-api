@@ -12,3 +12,15 @@ export async function register(name, email, password) {
     return response.data;
     
 }
+
+
+export async function forgotPassword(email){
+    const response = await api.post("/auth/forgot-password", { email });
+    return response.data;
+}
+
+
+export async function resetPassword(token, password) {
+    const response = await api.post("/auth/reset-password", { token, password });
+    return response.data;
+}
