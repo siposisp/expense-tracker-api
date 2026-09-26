@@ -33,6 +33,9 @@ export const expenseRepository = {
                 userId,
                 isActive: true,
             },
+            include: {
+                category: true,
+            }
         });
     },
 
