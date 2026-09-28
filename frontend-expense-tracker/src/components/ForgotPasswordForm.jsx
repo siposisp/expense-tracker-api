@@ -16,7 +16,7 @@ export default function ForgotPasswordForm() {
             const data = await forgotPassword(email);
             setMessage(data.message);
         } catch (error) {
-            setMessage('Something went wrong. Please try again.');
+            setMessage('Algo salió mal. Por favor, intente otra vez.');
         } finally {
             setLoading(false);
         }

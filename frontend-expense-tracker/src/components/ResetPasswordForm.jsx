@@ -17,7 +17,7 @@ export default function ResetPasswordForm() {
         setError('');
 
         if (password !== confirmPassword) {
-            setError("Passwords don't match");
+            setError("Las contraseñas no coinciden.");
             return;
         }
 
@@ -28,7 +28,7 @@ export default function ResetPasswordForm() {
             setSuccess(true);
             setTimeout(() => navigate('/login'), 2000);
         } catch (err) {
-            setError(err.response?.data?.error || 'Something went wrong');
+            setError(err.response?.data?.error || 'Algo salió mal');
         } finally {
             setLoading(false);
         }
@@ -36,12 +36,12 @@ export default function ResetPasswordForm() {
 
     return (
         <div className='bg-white px-10 py-10.5 rounded-3xl border-2 border-gray-300'>
-            <h1 className='text-4xl font-semibold'>Reset password</h1>
-            <p className='font-medium text-lg text-gray-500 mt-4'>Enter your new password below.</p>
+            <h1 className='text-4xl font-semibold'>Restablecer contraseña</h1>
+            <p className='font-medium text-lg text-gray-500 mt-4'>Introduce tu nueva contraseña a continuación.</p>
 
             {success ? (
                 <p className="mt-8 text-green-600 font-medium">
-                    Password reset! Redirecting to login...
+                    ¡Contraseña restablecida! Redirigiendo al inicio de sesión...
                 </p>
             ) : (
                 <form onSubmit={handleSubmit} className='mt-8'>
@@ -50,7 +50,7 @@ export default function ResetPasswordForm() {
                     )}
 
                     <div>
-                        <label className='text-lg font-medium'>New password</label>
+                        <label className='text-lg font-medium'>Nueva contraseña</label>
                         <input
                             className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
                             placeholder='At least 8 characters'
@@ -62,7 +62,7 @@ export default function ResetPasswordForm() {
                         />
                     </div>
                     <div className="mt-4">
-                        <label className='text-lg font-medium'>Confirm password</label>
+                        <label className='text-lg font-medium'>Confirmar Contraseña</label>
                         <input
                             className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
                             placeholder='Repeat your password'
@@ -80,7 +80,7 @@ export default function ResetPasswordForm() {
                             disabled={loading}
                             className='active:scale-[.98] active:duration-60 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold disabled:opacity-50'
                         >
-                            {loading ? 'Resetting...' : 'Reset password'}
+                            {loading ? 'Restableciendo...' : 'Restablecer contraseña'}
                         </button>
                     </div>
                 </form>

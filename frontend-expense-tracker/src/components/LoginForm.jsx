@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { login } from "../api/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Form() {
@@ -9,6 +9,8 @@ export default function Form() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     // This is executed when the user submits the form (clicks on "Sign in" or presses Enter)
     async function handleSubmit(e) {
@@ -19,18 +21,27 @@ export default function Form() {
         try{
             const data = await login(email, password);
             localStorage.setItem('token', data.token);
-            console.log('Login successful, token saved');
-        } catch (error){
-            setError('Incorrect email or password');
-        } finally {
+            console.log('Inicio de sesión exitoso, token guardado');
+            navigate('/expenses');
+
+        }catch (error) {
+            console.error("Error durante el inicio de sesión:", error);
+
+            if (error.response?.status === 401) {
+                setError('Contraseña y/o correo incorreto(s)');
+            } else {
+                setError('Algo salió mal.. Por favor, intente otra vez.');
+            }
+
+        }finally {
             setLoading(false);
         }
     }
 
     return (
         <div className='bg-white px-10 py-10.5 rounded-3xl border-2 border-gray-300'>
-            <h1 className='text-5xl font-semibold'>Welcome Back</h1>
-            <p className='font-medium text-lg text-gray-500 mt-4'>Welcome back! Please enter your details.</p>
+            <h1 className='text-5xl font-semibold'>Bienvenido de nuevo</h1>
+            <p className='font-medium text-lg text-gray-500 mt-4'>¡Bienvenido de nuevo! Por favor, introduce tus datos.</p>
             <form onSubmit={handleSubmit} className='mt-5'>
                 {error && (
                     <p className="text-red-500 font-medium mb-4">{error}</p>
@@ -38,10 +49,10 @@ export default function Form() {
 
                 <div>
                     <div>
-                        <label className='text-lg font-medium'>Email</label>
+                        <label className='text-lg font-medium'>Correo</label>
                         <input
                             className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
-                            placeholder='Enter your email'
+                            placeholder='Ingresa tu correo'
                             type='email'
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -49,10 +60,10 @@ export default function Form() {
                         />
                     </div>
                     <div className='mt-3'>
-                        <label className='text-lg font-medium'>Password</label>
+                        <label className='text-lg font-medium'>Contraseña</label>
                         <input
                             className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
-                            placeholder='Enter your password'
+                            placeholder='Ingresa tu contraseña'
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -65,10 +76,10 @@ export default function Form() {
                                 type="checkbox"
                                 id='remember'
                             />
-                            <label className='ml-1.5 font-medium text-base' htmlFor="remember">Remember for 30 days</label>
+                            <label className='ml-1.5 font-medium text-base' htmlFor="remember">Recordar por 30 días</label>
                         </div>
                         <Link to="/forgot-password" className="font-medioum text-base text-violet-500">
-                            Forgot password
+                            Olvidé mi contraseña
                         </Link>
                     </div>
 
@@ -78,7 +89,7 @@ export default function Form() {
                             disabled={loading}
                             className= 'active:scale-[.98] active:duration-60 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold'
                         >
-                            {loading ? 'Signing in...' : 'Sign in'}
+                            {loading ? 'Iniciando...' : 'Iniciar sesión'}
                         </button>
                         <button type="button" className="flex border-2 py-2 rounded-xl border-gray-100 active:scale-[.98] active:duration-60 hover:scale-[1.01] items-center justify-center gap-2">
                         <svg width="24" height="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -87,12 +98,12 @@ export default function Form() {
                             <path fill="#FBBC05" d="M3.963 10.705A5.41 5.41 0 0 1 3.682 9c0-.592.102-1.168.281-1.705V4.963H.956A9 9 0 0 0 0 9c0 1.452.347 2.827.956 4.037l3.007-2.332z"/>
                             <path fill="#EA4335" d="M9 3.58c1.322 0 2.507.455 3.441 1.346l2.581-2.582C13.463.891 11.426 0 9 0A9 9 0 0 0 .956 4.963l3.007 2.332C4.672 5.165 6.656 3.58 9 3.58z"/>
                         </svg>
-                        Sign in with Google
+                        Iniciar sesión con Google
                         </button>
                     </div>
                     <div className='mt-8 flex justify-center item-center'>
-                        <p className='font-medium text-base'>Don't have an account</p>
-                        <Link to="/register" className='text-violet-500 text-base font-medium ml-2'>Sign up</Link>
+                        <p className='font-medium text-base'>No tengo una cuenta</p>
+                        <Link to="/register" className='text-violet-500 text-base font-medium ml-2'>Registrarse</Link>
                     </div>
                 </div>
             </form>
