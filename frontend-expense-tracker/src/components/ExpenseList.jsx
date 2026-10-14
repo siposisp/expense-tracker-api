@@ -7,7 +7,6 @@ export default function ExpenseList() {
     useEffect(() => {
         getExpenses()
             .then((data) => {
-                console.log("Expenses recibidos:", data);
                 setExpenses(data);
             })
             .catch((error) => {
@@ -16,18 +15,29 @@ export default function ExpenseList() {
     }, []);
 
     return (
-        <div>
-            <h1>Mis gastos</h1>
-            <ul>
-                {expenses.map((expense) => (
-                    <li key={expense.id}>
-                        {expense.category.name}
-                        {expense.description}
-                        {expense.amount}
-                        {expense.date}
-                    </li>
-                ))}
-            </ul>
+        <div className='p-8'>
+            <h1 className='text-3xl font-bold mb-6'>Mis gastos</h1>
+
+            <table className='w-full border-collapse'>
+                <thead>
+                    <tr className='border-b-2 border-gray-200 text-left'>
+                        <th className='py-3 px-4'>Descripción</th>
+                        <th className='py-3 px-4'>Categoría</th>
+                        <th className='py-3 px-4'>Monto</th>
+                        <th className='py-3 px-4'>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {expenses.map((expense) => (
+                        <tr key={expense.id} className='border-b border-gray-100'>
+                            <td className='py-3 px-4'>{expense.description}</td>
+                            <td className='py-3 px-4'>{expense.category.name}</td>
+                            <td className='py-3 px-4'>{expense.amount}</td>
+                            <td className='py-3 px-4'>{expense.date}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

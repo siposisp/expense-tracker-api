@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from './pages/Login';
-import Register from './pages/Register'
-import ForgotPassword from './pages/ForgotPassword'
-import ResetPassword from './pages/ResetPassword'
+import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Expenses from "./pages/Expenses";
+import Layout from './components/Layout';
 import './App.css';
 
 function App() {
@@ -14,7 +15,10 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
-      <Route path="/expenses" element={<Expenses />} />
+
+      <Route element={<Layout />}>
+        <Route path="/expenses" element={<Expenses />} />
+      </Route>
     </Routes>
   );
 }
